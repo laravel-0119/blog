@@ -16,3 +16,8 @@ use Illuminate\Foundation\Inspiring;
 Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->describe('Display an inspiring quote');
+
+Artisan::command('install', function () {
+    //$this->comment('App has been installed');
+    //echo 'App has been installed';
+})->describe('Installer for our app');
