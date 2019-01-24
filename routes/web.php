@@ -24,6 +24,8 @@ Route::get('/test', function () {
 Route::get('/datetime', function () {
     return date('d.m.Y H:i:s');
 });
+
+Route::get('/about', 'TestController@about');
 /*
 Route::get('/404', function () {
     return view('404');
@@ -45,6 +47,18 @@ Route::post('/login', 'TestController@postingLoginData')->name('loginRoutePost')
 
 Route::redirect('/403', '/');
 
-Route::get('/page/{id?}', 'TestController@page')
+Route::get('/page/{id}/{data}', 'TestController@page')
     ->where('id', '[0-9]+')
     ->name('pageRoute');
+
+
+Route::group(['prefix' => 'test'], function () {
+    Route::get('response1', 'MainController@response1');
+    Route::get('response2', 'MainController@response2');
+    Route::get('response3', 'MainController@response3');
+    Route::get('response4', 'MainController@response4');
+    Route::get('response5', 'MainController@response5');
+    Route::get('response6', 'MainController@response6');
+    Route::get('response7', 'MainController@response7');
+    Route::get('response8', 'MainController@response8');
+});
