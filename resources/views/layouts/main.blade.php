@@ -10,6 +10,3 @@
     @include('blocks.header')
 @endsection
 
-
-
-

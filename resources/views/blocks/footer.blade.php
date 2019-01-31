@@ -1,3 +1,1 @@
-<footer>
-    Copyright (c) 2019 MyBlog
-</footer>
+<span>Copyright 2018.</span>

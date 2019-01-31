@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,44 +12,42 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+/*Route::get('/', function () {
     return view('welcome');
-})->name('mainPage');
+});*/
 
-Route::get('/test', function () {
-    return "<h1>Hello</h1>";
-});
+Route::get('/', 'MainController@index')
+    ->name('mainPage');
 
-Route::get('/datetime', function () {
-    return date('d.m.Y H:i:s');
-});
+Route::get('/blade', 'MainController@blade')
+    ->name('bladePage');
 
-Route::get('/about', 'TestController@about');
-/*
-Route::get('/404', function () {
-    return view('404');
-});
-*/
-Route::view('/hfghfghfghfghgfh', 'asdasdasd');
-
-Route::get('/test/date', 'TestController@dateTime');
-Route::get('/test/about', 'TestController@about');
-Route::get('/test/user', 'TestController@data');
-
-Route::put('/testput', function() {
-    return 'PUT!!!';
-});
-
-
-Route::get('/login', 'TestController@showLoginForm')->name('loginRoute');
-Route::post('/login', 'TestController@postingLoginData')->name('loginRoutePost');
-
-Route::redirect('/403', '/');
-
-Route::get('/page/{id}/{data}', 'TestController@page')
+Route::get('/about/{id?}', 'MainController@about')
     ->where('id', '[0-9]+')
-    ->name('pageRoute');
+    ->name('aboutRoute');
 
+//Route::redirect('/login', '/404', 302);
+
+
+Route::get('/login', 'TestController@showLoginForm')
+    ->name('loginRoute');
+Route::post('/login', 'TestController@postingLoginData')
+    ->name('loginRoutePost');
+
+Route::match(['get', 'put', 'post'],'/login1', function () {
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        echo 'POST';
+    }
+    if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+        echo 'GET';
+    }
+
+    if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
+        echo 'PUT';
+    }
+});
+
+Route::view('/404', '404');
 
 Route::group(['prefix' => 'test'], function () {
     Route::get('response1', 'MainController@response1');
@@ -62,3 +59,9 @@ Route::group(['prefix' => 'test'], function () {
     Route::get('response7', 'MainController@response7');
     Route::get('response8', 'MainController@response8');
 });
+
+/*Route::get('/about', function () {
+    return 'test';
+});*/
+
+

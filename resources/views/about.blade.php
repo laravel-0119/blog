@@ -68,15 +68,8 @@
         <div class="flex-center position-ref full-height">
             <div class="content">
                 <div class="title m-b-md">
-                    <h3>Привет, {{ $name or '' }}!</h3>
-                    <h3>Мне {{ $age or '' }} лет!</h3>
-                    <div class="error" style="color: red; font-size: 18px">{{ $errorMessage or '' }}</div>
-                    <form method="POST" action="/login">
-                        @csrf
-                        Login: <input type="text" name="login"><br>
-                        Password: <input type="password" name="password">
-                        <input type="submit" value="Go!">
-                    </form>
+                    <h2>О компании {{ $id or 'null' }}</h2>
+                    <h2>a: {{ $a or '' }}</h2>
                 </div>
             </div>
         </div>

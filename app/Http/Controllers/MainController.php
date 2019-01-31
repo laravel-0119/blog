@@ -1,18 +1,36 @@
-<?php
-
-namespace App\Http\Controllers;
+<?php namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cookie;
 
 class MainController extends Controller
 {
+    public function index()
+    {
+        $user = [
+            'data' => [
+                'name' => 'Dmitrii',
+                'surname' => 'Iurev',
+            ]
+        ];
+
+        return $user;
+    }
+
+    public function blade()
+    {
+        return view('layouts.primary',[
+            'page' => 'login'
+        ]);
+    }
+
     public function about(Request $request, $id = null)
     {
         $allInput = $request->all();
         //dump($allInput);
         //dump($request->url(), $request->fullUrl(), $request->path());
 
-        //$a = $request->input('a', 'Default');
+        $a = $request->input('a', 'Default');
 
         //dump($request->cookie('name'));
         //dump(Cookie::get('name'));
@@ -24,15 +42,10 @@ class MainController extends Controller
 
     public function response1()
     {
-        //return 'OK';
-
-        $content = '<h1>404 Not Found</h1>';
-
-
-        return response($content,404)
-            ->header('Content-Type', 'text/html')
-            ->header('X-Powered-By', 'Laravel 5.7')
-            ->cookie('mycookie', 'myvalue', 60 * 24);
+        return response('<h1>404 Not Found</h1>',404)
+            ->header('Content-Type', 'text/plain')
+            ->header('X-Powered-By', 'Laravel 5.6')
+            ->cookie('mycookie', 'val', 60*24);
 
     }
 
@@ -43,8 +56,7 @@ class MainController extends Controller
 
     public function response3()
     {
-        return redirect()
-            ->away('https://ya.ru/');
+        return redirect()->away('http://ya.ru/');
     }
 
     public function response4()
@@ -56,23 +68,23 @@ class MainController extends Controller
     public function response5()
     {
         return redirect()
-            ->action('TestController@dateTime');
+        ->action('MainController@response3');
     }
 
     public function response6()
     {
-        /*return [
+        return [
             'name' => 'Abigail',
             'state' => 'CA'
-        ];*/
+        ];
 
-        $string = (string) json_encode([
-            'name' => 'Abigail',
-            'state' => 'CA'
-        ]);
+       /*$string = (string) json_encode([
+           'name' => 'Abigail',
+           'state' => 'CA'
+       ]);
 
-         return response($string)
-             ->header('Content-Type', 'application/json');
+        return response($string)
+            ->header('Content-Type', 'application/json');*/
     }
 
     public function response7()
@@ -83,9 +95,6 @@ class MainController extends Controller
 
     public function response8()
     {
-        return response()
-            ->download(base_path('files.zip'), 'laravel.zip')
-            ->deleteFileAfterSend();
-
+        return redirect('http://ya.ru/');
     }
 }

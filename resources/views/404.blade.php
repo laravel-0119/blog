@@ -68,15 +68,8 @@
         <div class="flex-center position-ref full-height">
             <div class="content">
                 <div class="title m-b-md">
-                    <h3>Привет, {{ $name or '' }}!</h3>
-                    <h3>Мне {{ $age or '' }} лет!</h3>
-                    <div class="error" style="color: red; font-size: 18px">{{ $errorMessage or '' }}</div>
-                    <form method="POST" action="/login">
-                        @csrf
-                        Login: <input type="text" name="login"><br>
-                        Password: <input type="password" name="password">
-                        <input type="submit" value="Go!">
-                    </form>
+                    <h1>404</h1>
+                    <h2>Page not found</h2>
                 </div>
             </div>
         </div>

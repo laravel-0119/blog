@@ -1,7 +1,10 @@
 <html>
 <head>
     <title>{{ $title }}</title>
-    <script src="jquery.js"></script>
+
+    @section('head_scripts')
+        <script src="jquery.js"></script>
+    @show
 </head>
 
 <body>
@@ -15,6 +18,8 @@
         @yield('content', 'I`m content!')
     </div>
 
-    @include('blocks.footer')
+    <footer>
+        @include('blocks.footer')
+    </footer>
 </body>
 </html>

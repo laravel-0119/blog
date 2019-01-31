@@ -17,7 +17,6 @@ Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->describe('Display an inspiring quote');
 
-Artisan::command('install', function () {
-    //$this->comment('App has been installed');
-    //echo 'App has been installed';
-})->describe('Installer for our app');
+Artisan::command('getdate', function () {
+    echo date('d.m.Y H:i:s');
+})->describe('Display an inspiring quote');

@@ -1,3 +1,1 @@
-<header>
-    This is the main header
-</header>
+<h2>The NEW Header</h2>
