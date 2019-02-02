@@ -3,8 +3,18 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 
+
+
 class MainController extends Controller
 {
+    protected $counter;
+
+    public function __construct()
+    {
+        //parent::__construct();
+        $this->counter = resolve('AwesomeCounter');
+    }
+
     public function index()
     {
         $user = [
@@ -14,7 +24,17 @@ class MainController extends Controller
             ]
         ];
 
-        return $user;
+        $this->counter->increment();
+        $this->counter->increment();
+        $this->counter->increment();
+        $this->counter->decrement();
+        dump($this->counter, resolve('AwesomeCounter'));
+
+        return $this->counter->getValue();
+
+        $date = getRusDate(date('Y-m-d H:i:s'));
+
+        return $date;
     }
 
     public function blade()
