@@ -14,15 +14,26 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        View::share('name', 'Dmitrii Iurev');
-        //View::share('title', 'Мой супер-пупер блог');
+        View::share('name', $this->getName());
+        View::share('title', 'Default title');
+        View::share('page', 'login');
 
-        View::composer('*', function ($view) {
-            $a = 2 * 2;
 
-            $view->with([
-                'title' => $a
-            ]);
+        /*View::share('name', 'Guest');
+        View::share('name', 'Guest');
+        View::share('name', 'Guest');
+        View::share('name', 'Guest');*/
+
+        $isAuth = true;
+
+        View::composer(['404', 'login'], function ($view) use ($isAuth) {
+            if ($isAuth !== true) {
+                $name =  'guest';
+            } else {
+                $name =  'Dima';
+            }
+
+            $view->with('name', $name );
         });
     }
 
@@ -34,5 +45,11 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         //
+    }
+
+
+    protected function getName()
+    {
+        return 'Vasya Pupkin';
     }
 }
