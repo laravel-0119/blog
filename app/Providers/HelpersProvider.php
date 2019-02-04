@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-use App\Custom\Classes\MyCounter;
 use Illuminate\Support\ServiceProvider;
 
 class HelpersProvider extends ServiceProvider
@@ -14,7 +13,7 @@ class HelpersProvider extends ServiceProvider
      */
     public function boot()
     {
-        require_once(app_path('') . '/Custom/helpers.php');
+        require app_path('Includes/helpers.php');
     }
 
     /**
@@ -24,12 +23,6 @@ class HelpersProvider extends ServiceProvider
      */
     public function register()
     {
-        /*$this->app->singleton('AwesomeCounter', function ($app) {
-            return new MyCounter();
-        });*/
-
-        $this->app->bind('AwesomeCounter', function ($app) {
-            return new MyCounter();
-        });
+        //
     }
 }

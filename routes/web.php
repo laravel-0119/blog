@@ -1,5 +1,4 @@
 <?php
-use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,42 +11,81 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/', 'MainController@index')
+    ->name('site.main.index');
+Route::get('/about.html', 'MainController@about')
+    ->name('site.main.about');
+Route::get('/feedback.html', 'MainController@feedback')
+    ->name('site.main.feedback');
+Route::get('/post/{id}.html', 'PostController@post')
+    ->name('site.posts.post')
+    ->where('id', '[\d]+');
+
+Route::get('/db.html', 'MainController@db')
+    ->name('site.main.db');
+
+
+/**
+ * Routes for register and login
+ */
+Route::get('/register.html', 'AuthController@register')
+    ->name('site.auth.register');
+
+Route::post('/register.html', 'AuthController@registerPost')
+    ->name('site.auth.registerPost');
+
+Route::get('/login.html', 'AuthController@login')
+    ->name('site.auth.login');
+
+Route::post('/login.html', 'AuthController@loginPost')
+    ->name('site.auth.loginPost');
+
+Route::get('/logout', 'AuthController@logout')
+    ->name('site.auth.logout');
+
+Route::group(['prefix' => 'test'], function () {
+    Route::any('/', 'TestController@index');
+    Route::get('/users', 'TestController@getUsers');
+    Route::get('/testOrm', 'TestController@testOrm');
+});
+
 /*Route::get('/', function () {
     return view('welcome');
 });*/
 
-Route::get('/', 'MainController@index')
+//Route::view('/', 'welcome');
+
+/*Route::get('/404', function () {
+    return view('404');
+});*/
+/*
+Route::get('/', 'MainController@mainPage')
     ->name('mainPage');
 
-Route::get('/blade', 'MainController@blade')
-    ->name('bladePage');
+Route::get('/about', 'MainController@aboutPage')
+    ->name('aboutPage');
 
-Route::get('/about/{id?}', 'MainController@about')
-    ->where('id', '[0-9]+')
-    ->name('aboutRoute');
+Route::get('/404', 'MainController@notFoundPage')
+    ->name('notFoundPage');
 
-//Route::redirect('/login', '/404', 302);
+Route::get('/test', 'TestController@testGetMethod');
+Route::post('/test', 'TestController@testPostMethod');
 
+Route::match(['get', 'post'], '/testGetPost', 'TestController@testPostGetMethod');
 
-Route::get('/login', 'TestController@showLoginForm')
-    ->name('loginRoute');
-Route::post('/login', 'TestController@postingLoginData')
-    ->name('loginRoutePost');
+Route::any('/testGetPost', 'TestController@testPostGetMethod');
 
-Route::match(['get', 'put', 'post'],'/login1', function () {
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        echo 'POST';
-    }
-    if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-        echo 'GET';
-    }
+Route::redirect('/here', '/404', 302);
 
-    if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
-        echo 'PUT';
-    }
-});
+Route::get('/main/user/{id?}', 'MainController@user')
+    ->where('id', '[0-9]+');
 
-Route::view('/404', '404');
+Route::get('/user/{id}/{name}', function ($id, $name) {
+    return $id . ' - ' . $name;
+})->where(['id' => '[0-9]+', 'name' => '[a-z]+']);
+
+Route::get('/test/redirect', 'TestController@redirectPage');
+Route::any('/test/', 'TestController@testPostGetMethod');
 
 Route::group(['prefix' => 'test'], function () {
     Route::get('response1', 'MainController@response1');
@@ -58,10 +96,11 @@ Route::group(['prefix' => 'test'], function () {
     Route::get('response6', 'MainController@response6');
     Route::get('response7', 'MainController@response7');
     Route::get('response8', 'MainController@response8');
+
+    Route::get('some', 'TestController@some');
 });
+*/
 
-/*Route::get('/about', function () {
-    return 'test';
-});*/
+Auth::routes();
 
-
+Route::get('/home', 'HomeController@index')->name('home');
