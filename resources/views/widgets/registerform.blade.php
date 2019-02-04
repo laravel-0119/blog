@@ -18,7 +18,7 @@
                 <div class="form-group">
                     <label for="inputEmail3" class="col-sm-3 control-label">Имя/Никнейм</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="inputEmail3" name="name" placeholder="Ivan Ivanov">
+                        <input type="text" class="form-control" id="inputEmail3" name="name" placeholder="Ivan Ivanov" value="{{ old('name', '') }}">
                     </div>
                 </div>
 
@@ -41,9 +41,9 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="inputPassword3" class="col-sm-3 control-label">Номер телефона</label>
+                    <label for="inputPassword3" class="col-sm-3 control-label">Код приглашения</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="" name="phone" placeholder="8 (999) 123-45-67">
+                        <input type="text" class="form-control" id="" name="invite" placeholder="XXX-000-XXX" value="AAA-000-XXX">
                     </div>
                 </div>
                 <div class="form-group">
