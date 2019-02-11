@@ -49,6 +49,9 @@ Route::group(['prefix' => 'test'], function () {
     Route::get('/testOrm', 'TestController@testOrm');
 });
 
+Route::get('/test/menu', 'TestController@testMenu');
+//Route::post('/test', 'TestController@testPostMethod');
+
 /*Route::get('/', function () {
     return view('welcome');
 });*/

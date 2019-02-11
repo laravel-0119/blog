@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Custom\Classes\MainMenu;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -12,17 +13,13 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(MainMenu $mainMenu)
     {
         View::share('name', $this->getName());
         View::share('title', 'Default title');
         View::share('page', 'login');
+        View::share('mainMenu', $mainMenu->buildMenu());
 
-
-        /*View::share('name', 'Guest');
-        View::share('name', 'Guest');
-        View::share('name', 'Guest');
-        View::share('name', 'Guest');*/
 
         $isAuth = true;
 

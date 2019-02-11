@@ -1,7 +1,7 @@
-<?php
+<?php namespace App\Http\Controllers;
 
-namespace App\Http\Controllers;
 
+use App\Custom\Classes\MainMenu;
 use Illuminate\Http\Request;
 
 class TestController extends Controller
@@ -27,5 +27,11 @@ class TestController extends Controller
             'errorMessage' => 'Неправильный логин или пароль',
             'name' => 'Dmitrii',
         ]);
+    }
+
+    public function testMenu()
+    {
+        $menu = new MainMenu();
+        dump($menu->buildMenu());
     }
 }
