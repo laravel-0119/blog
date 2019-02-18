@@ -11,7 +11,7 @@ class MainMenu
         return DB::table('menu')
             ->whereNull('parent_id')
             ->orderBy('weight')
-            ->get(['id', 'caption', 'link']);
+            ->get(['id', 'caption', 'link', 'route']);
     }
 
     protected function getItems($parentId)
@@ -20,19 +20,19 @@ class MainMenu
             ->whereNotNull('parent_id')
             ->where('parent_id', $parentId)
             ->orderBy('weight')
-            ->get(['caption', 'link']);
+            ->get(['caption', 'link', 'route']);
     }
 
-    protected function buildSectionWithoutChildren($caption, $link)
+    protected function buildSectionWithoutChildren($caption, $link, $route)
     {
         return <<<HTML
-            <li class="dropdown">
+            <li class="dropdown $route">
                 <a href="$link" class="dropdown-toggle" data-toggle="dropdown">$caption</a>
             </li>
 HTML;
     }
 
-    protected function buildSectionWithChildren($caption, $link, $items)
+    protected function buildSectionWithChildren($caption, $link, $items, $route)
     {
         $itemsBlock = '';
 
@@ -47,7 +47,7 @@ HTML;
             $itemsBlock .='</ul>';
         }
 
-        $sectionHTML = str_replace('</li>', '', $this->buildSectionWithoutChildren($caption, $link));
+        $sectionHTML = str_replace('</li>', '', $this->buildSectionWithoutChildren($caption, $link, $route));
 
         return $sectionHTML . $itemsBlock . '</li>';
     }
@@ -63,9 +63,9 @@ HTML;
                 //dump($items);
 
                 if ($items instanceof Collection && count($items) > 0) {
-                    $menu .= $this->buildSectionWithChildren($category->caption, $category->link, $items);
+                    $menu .= $this->buildSectionWithChildren($category->caption, $category->link, $items, $category->route);
                 } else {
-                    $menu .= $this->buildSectionWithoutChildren($category->caption, $category->link);
+                    $menu .= $this->buildSectionWithoutChildren($category->caption, $category->link, $category->route);
                 }
             }
         }

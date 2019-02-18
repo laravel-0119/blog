@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Custom\Classes\MainMenu;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -20,6 +21,9 @@ class AppServiceProvider extends ServiceProvider
         View::share('page', 'login');
         View::share('mainMenu', $mainMenu->buildMenu());
 
+        View::composer('*', function ($view) {
+            $view->with('currentRoute', Route::currentRouteName());
+        });
 
         $isAuth = true;
 

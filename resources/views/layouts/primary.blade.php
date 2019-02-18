@@ -22,8 +22,8 @@
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
     <script>
         $(function () {
-            if (window.BlogSettings.activeMenu) {
-                $('ul.navigation').find('.' + window.BlogSettings.activeMenu).addClass('active');
+            if (window.BLOG_SETTINGS.currentRoute) {
+                $('.' + window.BLOG_SETTINGS.currentRoute).addClass('active');
             }
         });
     </script>
@@ -31,8 +31,8 @@
 
 @section('head_scripts')
     <script>
-        window.BlogSettings = {
-            "activeMenu": "{{ $activeMenu or '' }}"
+        window.BLOG_SETTINGS = {
+            "currentRoute": "{{ $currentRoute ?? '' }}"
         };
     </script>
-@show
+@endsection

@@ -14,9 +14,9 @@
 Route::get('/', 'MainController@index')
     ->name('site.main.index');
 Route::get('/about.html', 'MainController@about')
-    ->name('site.main.about');
+    ->name('aboutPage');
 Route::get('/feedback.html', 'MainController@feedback')
-    ->name('site.main.feedback');
+    ->name('feedbackPage');
 Route::get('/post/{id}.html', 'PostController@post')
     ->name('site.posts.post')
     ->where('id', '[\d]+');

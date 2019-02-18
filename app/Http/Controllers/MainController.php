@@ -4,12 +4,15 @@ use App\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Route;
 
 class MainController extends Controller
 {
     public function index()
     {
         $posts = [];
+
+        dump(Route::currentRouteName());
 
         return view('layouts.primary', [
             'page' => 'pages.main',
