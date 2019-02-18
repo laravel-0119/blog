@@ -1,6 +1,10 @@
 <?php namespace App\Http\Controllers;
 
 use App\Models\Customer;
+use App\Models\Post;
+use App\Models\Profile;
+use App\Models\Tag;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -11,8 +15,6 @@ class MainController extends Controller
     public function index()
     {
         $posts = [];
-
-        dump(Route::currentRouteName());
 
         return view('layouts.primary', [
             'page' => 'pages.main',
@@ -96,5 +98,105 @@ class MainController extends Controller
 
 
         //return 'OK';
+    }
+
+    public function relations()
+    {
+        /*$userModel = User::find(1);
+        $userProfile = $userModel->profile;
+
+
+        dump($userModel, $userProfile);
+        dump($userProfile->name, $userProfile->birthdate);
+
+
+        $user = Profile::where('name', 'Дмитрий Юрьев')
+            ->first()
+            ->user;
+
+        $user->password = '555555';
+        $user->save();*/
+
+
+        /*$postsByUser1 = User::find(1)
+            ->posts;
+
+        $postsByUser2 = Post::where('user_id', 1)
+            ->get();
+
+        $postsByUser3 = DB::table('posts')
+            ->where('user_id', 1)
+            ->get();
+
+        dump($postsByUser1, $postsByUser2, $postsByUser3);*/
+
+
+        /*$author = Post::where('title', 'Post 1')
+            ->first()
+            ->user
+            ->profile
+            ->name;
+
+        dump($author);*/
+
+
+        /*$tags = Post::where('title', 'Post 3')
+            ->first()
+            ->tags;
+
+        dump($tags);
+        $tagsString = '';
+
+        foreach ($tags as $tag) {
+            $tagsString .= $tag->name . ', ';
+        }*/
+
+        //dump($tagsString);
+
+        //dump(rtrim(trim($tagsString), ','));
+
+        //return 'OK';
+
+        /*$posts1 = Post::has('tags')
+            ->get();
+
+
+        $posts2 = Post::has('tags', '>=', 2)->get();
+        dump($posts1, $posts2);
+        dump(Post::doesntHave('tags')->get());*/
+
+        /*$postsByTag = Tag::where('name', 'Новость')
+            ->first()
+            ->posts;
+
+        dump($postsByTag);*/
+
+        /*$post = new Post([
+            'title' => 'Post4',
+            'slug' => '444',
+            'tagline' => 'nhgnghngh',
+        ]);*/
+
+        //$post->save();
+
+        //dump($post);
+
+        //$user = User::find(1);
+        //$user->posts()->save($post);
+
+        Post::find(1)
+            ->tags()
+            ->sync([
+                Tag::where('name', 'Новость')->first()->id,
+                Tag::where('name', 'Статья')->first()->id
+            ]);
+
+        Post::find(2)
+            ->tags()
+            ->sync([
+                Tag::where('name', 'Объявление')->first()->id,
+            ]);
+
+        return 'OK';
     }
 }
