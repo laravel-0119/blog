@@ -39,12 +39,23 @@ Route::group(['prefix' => 'post'], function() {
 
 Route::get('/register.html', 'AuthController@register')->name('site.auth.register');
 Route::post('/register.html', 'AuthController@registerPost')->name('site.auth.registerPost');
+
 Route::get('/login', 'AuthController@login')->name('site.auth.login');
 Route::post('/login', 'AuthController@loginPost')->name('site.auth.loginPost');
 Route::get('/logout', 'AuthController@logout')->name('site.auth.logout');
 
 
-Route::get('/test', 'TestController@testGet')->middleware('auth');
+Route::get('/test', 'TestController@testGet')
+    ->name('testRoute')
+    ->middleware('can:update,post');
+
 Route::post('/test', 'TestController@testPost');
 Route::get('/test/user', 'TestController@testUser');
 Route::get('/test/comment', 'TestController@testComment');
+
+Route::get('/create', 'PostController@create')
+    ->name('site.posts.create')
+    ->middleware('auth');
+
+Route::post('/create', 'PostController@createPost')
+    ->name('site.posts.createPost');

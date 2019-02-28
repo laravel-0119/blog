@@ -20,6 +20,7 @@ class AppServiceProvider extends ServiceProvider
         View::share('name', $this->getName());
         View::share('title', 'Default title');
         View::share('page', 'login');
+        View::share('activeMenu', '');
 
 
         /*View::share('name', 'Guest');

@@ -41,8 +41,8 @@
         <div class="container">
             <div class="content">
                 <div class="title">
-                    <span style="font-size: 150px">{{ $errorCode or '500' }}</span><br>
-                    {{ $errorMessage or 'Внутренняя ошибка сервера' }}
+                    <span style="font-size: 150px">{{ $errorCode ?? '500' }}</span><br>
+                    {{ $errorMessage ?? 'Внутренняя ошибка сервера' }}
                 </div>
             </div>
         </div>
