@@ -75,7 +75,7 @@ class AuthController extends Controller
         if ($authResult) {
             return redirect()->route('site.main.index');
         } else {
-            return redirect()->route('site.auth.login')->with('authError', trans('custom.wrong_password'));
+            return redirect()->route('site.auth.login')->with('authError', 'Неправильный логин или пароль');
         }
     }
 
