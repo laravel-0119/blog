@@ -33,6 +33,7 @@ class MainController extends Controller
             'page' => 'pages.about',
             'title' => 'Обо мне',
             'content' => Page::find(1)->content,
+            'link' => 'https://ya.ru',
             /*'image' => [
                 'path' => 'assets/images/Me.jpg',
                 'alt' => 'Image'
@@ -57,9 +58,6 @@ class MainController extends Controller
             'email' => 'required|max:255|email',
             'message' => 'required|max:10240|min:10',
         ]);
-
-        Mail::to('dima@932433.ru')
-            ->send(new FeedbackMail($this->request->all()));
 
         return view('layouts.primary', [
             'page' => 'parts.blank',
