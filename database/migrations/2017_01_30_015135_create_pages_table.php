@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddNumberToCustomersTable extends Migration
+class CreatePagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,10 @@ class AddNumberToCustomersTable extends Migration
      */
     public function up()
     {
-        Schema::table('customers', function (Blueprint $table) {
-            $table->tinyInteger('number')->default(0);
+        Schema::create('pages', function (Blueprint $table) {
+            $table->increments('id');
+            $table->text('content');
+            $table->timestamps();
         });
     }
 
@@ -25,8 +27,6 @@ class AddNumberToCustomersTable extends Migration
      */
     public function down()
     {
-        Schema::table('customers', function (Blueprint $table) {
-            $table->dropColumn('number');
-        });
+        Schema::dropIfExists('pages');
     }
 }

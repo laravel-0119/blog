@@ -16,7 +16,27 @@
         <nav class="navbar navbar-default" role="navigation">
             <div class="collapse navbar-collapse" id="readable-navbar-collapse">
                 <ul class="navigation">
-                    {!! $mainMenu ?? '' !!}
+                    <li class="main">
+                        <a href="{{ route('site.main.index') }}" class="dropdown-toggle" data-toggle="dropdown">Главная</a>
+                    </li>
+                    <li class="about">
+                        <a href="{{ route('site.main.about') }}" class="dropdown-toggle" data-toggle="dropdown">Кто я?</a>
+                    </li>
+                    <li class="feedback">
+                        <a href="{{ route('site.main.feedback') }}" class="dropdown-toggle" data-toggle="dropdown">Написать мне</a>
+                    </li>
+                    <li class="register">
+                        <a href="{{ route('site.auth.register') }}" class="dropdown-toggle" data-toggle="dropdown">Регистрация</a>
+                    </li>
+                    @if (Auth::check())
+                        <li class="login">
+                            <a href="{{ route('site.auth.logout') }}" class="dropdown-toggle" data-toggle="dropdown">Выход</a>
+                        </li>
+                    @else
+                        <li class="login">
+                            <a href="{{ route('site.auth.login') }}" class="dropdown-toggle" data-toggle="dropdown">Вход</a>
+                        </li>
+                    @endif
                 </ul>
             </div>
         </nav>

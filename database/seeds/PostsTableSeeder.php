@@ -27,7 +27,6 @@ class PostsTableSeeder extends Seeder
                 'fulltext' => $faker->realText(1024),
                 'active_from' => Carbon::now(),
                 'views_count' => mt_rand(0,100),
-                'user_id' => 1
             ]);
 
             $postModel->slug = $postModel->id . ':' . str_slug($postModel->title, '-');

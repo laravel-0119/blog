@@ -1,19 +1,22 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: CoolKid
- * Date: 07.05.2018
- * Time: 21:29
- */
+/*
+/user/
+/user/add
+/user/delete/
+*/
 
+Route::group(['prefix' => '/user'], function() {
+    Route::get('/', 'UserController@index')
+        ->name('admin.user.index');
 
-Route::prefix('api')->group(function () {
-    Route::get('/', function () {
-        return view('welcome.admin');
-    });
+    Route::post('/add', 'UserController@add')
+        ->name('admin.user.add');
 
-    Route::post('users', function () {
-        return view('admin.users');
-    });
+    Route::post('/edit/{id}', 'UserController@edit')
+        ->where('id', '[0-9]+')
+        ->name('admin.user.edit');
 
+    Route::get('/delete/{id}', 'UserController@delete')
+        ->where('id', '[0-9]+')
+        ->name('admin.user.delete');
 });
