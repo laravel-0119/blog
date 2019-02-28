@@ -1,103 +1,96 @@
 <?php namespace App\Http\Controllers;
 
-use App\Http\Requests\RegisterRequest;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
-
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
+    /**
+     * Отображение страницы регистрации
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function register()
     {
-        debug('Privet');
-        //debug($errors);
-
-        $res = DB::table('users')
-            ->where('name', '=', 'Petya')
-            ->where('password', '=', '123456')
-            ->count();
-            //->get()[0];
-
-/*
-        foreach ($res as $user) {
-            echo $user->name . ' - ' . $user->login . '<br>';
-        }*/
-
-
-        debug($res);
-
         return view('layouts.secondary', [
             'page' => 'pages.register',
             'title' => 'Регистрация в блоге',
-            'content' => '',
             'activeMenu' => 'register',
         ]);
     }
 
-    public function registerPost(RegisterRequest $request)
+    /**
+     * POST обработчик регистрации
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function registerPost()
     {
-        /*$this->validate($request, [
-            'name' => 'required|min:3|max:20',
-            'email' => 'required|email',
-            'password' => 'required|max:32|min:6',
+        $this->validate($this->request, [
+            'name' => 'max:255|min:3',
+            'email' => 'required|max:255|email|unique:users',
+            'password' => 'required|max:255|min:6',
             'password2' => 'required|same:password',
-            'is_confirmed' => 'accepted',
-            'invite' => 'regex:/^[a-zA-Z]{3}-[0-9]{3}-[a-zA-Z]{3}$/i'
-        ]);*/
-/*
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|min:3|max:20',
-            'email' => 'required|email',
-            'password' => 'required|max:32|min:6',
-            'password2' => 'required|same:password',
+            'phone' => 'regex:/\+\d{1}\s{1}\(\d{3}\)\s{1}\d{3}\-\d{2}\-\d{2}/',
             'is_confirmed' => 'accepted'
         ]);
 
+        $newUserModel = User::create([
+            'name' => $this->request->input('name'),
+            'email' => $this->request->input('email'),
+            'password' => bcrypt($this->request->input('password')),
+            'phone' => $this->request->input('phone'),
+        ]);
 
-        if ($validator->fails()) {
-            return redirect()
-                ->back()
-                ->withErrors($validator)
-                ->withInput();
-        }
-*/
-        $input = $request->all();
-        debug($input);
-
-        try {
-            $result = DB::table('users')->insert([
-                'login' => $request->input('email'),
-                'password' => $request->input('password'),
-                'name' => $request->input('name'),
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
+        if ($newUserModel) {
+            return view('layouts.secondary', [
+                'page' => 'parts.blank',
+                'title' => 'Регистрация в блоге',
+                'content' => 'Поздравляем, вы успешно зарегистрированы!',
+                'link' => '<a href="' . route('site.auth.login') . '">Войти</a>',
+                'activeMenu' => 'register',
             ]);
-        } catch (\Exception $e) {
-            $result = false;
+        } else {
+            abort(500);
         }
-
-
-
-        debug($result);
-
-        return 'OK';
-
-        //return redirect()->back();
     }
 
+    /**
+     * Отображение страницы входа в систему
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function login()
     {
         return view('layouts.secondary', [
             'page' => 'pages.login',
             'title' => 'Вход в систему',
-            'content' => '',
-            'activeMenu' => 'feedback',
+            'activeMenu' => 'login',
         ]);
     }
 
     public function loginPost()
     {
-        return redirect()->back();
+        $remember = $this->request->input('remember') ? true : false;
+
+        $authResult = Auth::attempt([
+            'email' => $this->request->input('email'),
+            'password' => $this->request->input('password'),
+        ], $remember);
+
+        if ($authResult) {
+            return redirect()->route('site.main.index');
+        } else {
+            return redirect()->route('site.auth.login')->with('authError', trans('custom.wrong_password'));
+        }
+    }
+
+    public function logout()
+    {
+        Auth::logout();
+
+        return redirect()->route('site.auth.login');
     }
 }
