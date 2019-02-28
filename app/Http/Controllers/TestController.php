@@ -1,37 +1,23 @@
-<?php namespace App\Http\Controllers;
+<?php
 
+namespace App\Http\Controllers;
 
-use App\Custom\Classes\MainMenu;
+use App\Models\Comment;
+use App\Models\Phone;
+use App\Models\Post;
+use App\Models\Upload;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class TestController extends Controller
 {
-    public function showLoginForm()
+    public function testGet()
     {
-        return view('login', [
-            //'name' => 'Dmitrii',
-        ]);
+        return 'OK';
     }
 
-    public function postingLoginData(Request $request)
+    public function testPost()
     {
-        $login = $request->input('login');
-        $password = $request->input('password');
 
-        if ($login === '111' && $password === '222') {
-            return redirect()
-                ->route('mainPage');
-        }
-
-        return view('login', [
-            'errorMessage' => 'Неправильный логин или пароль',
-            'name' => 'Dmitrii',
-        ]);
-    }
-
-    public function testMenu()
-    {
-        $menu = new MainMenu();
-        dump($menu->buildMenu());
     }
 }

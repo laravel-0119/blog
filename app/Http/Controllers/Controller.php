@@ -23,7 +23,6 @@ class Controller extends BaseController
 
     protected function renderSharedViews()
     {
-
         $sectionList = view('parts.shared.sectionList', [
             'sections' => Section::all()
         ])->render();
