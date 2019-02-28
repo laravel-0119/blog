@@ -1,5 +1,6 @@
 <?php namespace App\Http\Controllers;
 
+use App\Http\Requests\RegisterRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -26,22 +27,13 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function registerPost()
+    public function registerPost(RegisterRequest $request)
     {
-        $this->validate($this->request, [
-            'name' => 'max:255|min:3',
-            'email' => 'required|max:255|email|unique:users',
-            'password' => 'required|max:255|min:6',
-            'password2' => 'required|same:password',
-            'phone' => 'regex:/\+\d{1}\s{1}\(\d{3}\)\s{1}\d{3}\-\d{2}\-\d{2}/',
-            'is_confirmed' => 'accepted'
-        ]);
-
         $newUserModel = User::create([
-            'name' => $this->request->input('name'),
-            'email' => $this->request->input('email'),
-            'password' => bcrypt($this->request->input('password')),
-            'phone' => $this->request->input('phone'),
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'password' => bcrypt($request->input('password')),
+            'phone' => $request->input('phone'),
         ]);
 
         if ($newUserModel) {
