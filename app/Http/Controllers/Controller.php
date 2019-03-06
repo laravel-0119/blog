@@ -23,7 +23,7 @@ class Controller extends BaseController
 
     protected function renderSharedViews()
     {
-        $sectionList = view('parts.shared.sectionList', [
+        /*$sectionList = view('parts.shared.sectionList', [
             'sections' => Section::all()
         ])->render();
 
@@ -54,6 +54,42 @@ class Controller extends BaseController
         View::share('sectionList', $sectionList);
         View::share('favoritePost', $favoritePost);
         View::share('tagList', $tagList);
-        View::share('postList',$postList);
+        View::share('postList',$postList);*/
+
+        View::share('sectionList', Cache::remember('sectionList', env('CACHE_TIME', 0), function () {
+            return view('parts.shared.sectionList', [
+                'sections' => Section::all()
+            ])->render();
+        }));
+
+        View::share('favoritePost', Cache::remember('favoritePost', env('CACHE_TIME', 0), function () {
+            return view('parts.shared.favoritePost', [
+                'post' => Post::where('is_favorite', 1)
+                    ->orderBy('id', 'DESC')
+                    ->take(1)
+                    ->first()
+            ])->render();
+        }));
+
+        View::share('tagList', Cache::remember('tagList', env('CACHE_TIME', 0), function () {
+            return view('parts.shared.tagList', [
+                'tags' => Tag::all()
+            ])->render();
+        }));
+
+        View::share('postList', Cache::remember('postList', env('CACHE_TIME', 0), function () {
+            return view('parts.shared.postList', [
+                'recentPosts' => Post::active()
+                    ->inTime()
+                    ->orderBy('id', 'DESC')
+                    ->take(3)
+                    ->get(),
+                'popularPosts' => Post::active()
+                    ->inTime()
+                    ->orderBy('views_count', 'DESC')
+                    ->take(3)
+                    ->get(),
+            ])->render();
+        }));
     }
 }
