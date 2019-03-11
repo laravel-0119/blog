@@ -59,3 +59,12 @@ Route::get('/create', 'PostController@create')
 
 Route::post('/create', 'PostController@createPost')
     ->name('site.posts.createPost');
+
+Route::get('/ajax', 'MainController@ajaxSimple')
+    ->name('site.main.ajaxSimple');
+Route::post('/ajax', 'MainController@postAjaxSimple')
+    ->name('site.main.postAjaxSimple')
+    ->middleware('api');
+
+Route::get('/feedback2', 'MainController@feedback2')
+    ->name('site.main.feedback2');
