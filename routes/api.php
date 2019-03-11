@@ -16,3 +16,13 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+/*Route::post('/ajax', 'MainController@postAjaxSimple')
+    ->name('site.main.postAjaxSimple1');*/
+
+Route::post('/feedback', 'Api\FeedbackController@processPost')
+    ->name('site.api.feedback1');
+
+/*Route::group(['middleware' => 'api'], function() {
+
+});*/

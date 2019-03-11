@@ -107,4 +107,36 @@ class MainController extends Controller
             'activeMenu' => 'feedback',
         ]);
     }
+
+    public function ajaxSimple()
+    {
+        return view('layouts.primary', [
+            'page' => 'pages.ajax',
+            'title' => 'Ajax test',
+        ]);
+    }
+
+    public function postAjaxSimple(Request $request)
+    {
+        $name = $request->input('name');
+        $surname = $request->input('surname');
+        $age = $request->input('age');
+
+        abort(500);
+
+        return view('api.simple', [
+            'name' => $name,
+            'surname' => $surname,
+            'age' => $age,
+        ]);
+    }
+
+    public function feedback2()
+    {
+        return view('layouts.primary', [
+            'page' => 'pages.feedback2',
+            'title' => 'Написать мне',
+            'activeMenu' => 'feedback',
+        ]);
+    }
 }
